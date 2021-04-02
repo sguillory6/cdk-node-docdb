@@ -1,0 +1,9 @@
+aws-cdk.core==1.95.1
+aws-cdk.aws_docdb==1.95.1
+aws-cdk.aws_ec2==1.95.1
+aws-cdk.aws_ecs==1.95.1
+aws-cdk.aws_ecs_patterns==1.95.1
+aws-cdk.aws_elasticloadbalancingv2==1.95.1
+aws-cdk.aws_logs==1.95.1
+aws-cdk.aws_servicediscovery==1.95.1
+python-benedict==0.23.2

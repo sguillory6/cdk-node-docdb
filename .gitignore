@@ -1,0 +1,13 @@
+# ignore CDK generated files
+*env
+cdk.out/
+cdk.out/
+cdk.out/
+cdk.context.json
+__pycache__/
+
+# ignore emacs auto-save files
+*~
+
+# ignore IDEA project files
+.idea
