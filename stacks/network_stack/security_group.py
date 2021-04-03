@@ -13,12 +13,22 @@ class SecurityGroup(core.Construct):
 
         self._vpc = vpc
         self.__create_bastion_sg()
+        self.__create_docdb_sg()
 
-    # Create elasticsearch security group
+    # Create bastion security group
     def __create_bastion_sg(self) -> ec2.SecurityGroup:
         self.bastion_sg = ec2.SecurityGroup(
             self, 'BastionHost',
             security_group_name='BastionHostSG',
             vpc=self._vpc,
             description='Bastion Host security group',
+        )
+
+    # Create DocumentDB security group
+    def __create_docdb_sg(self) -> ec2.SecurityGroup:
+        self.docdb_sg = ec2.SecurityGroup(
+            self, 'DocDBSG',
+            security_group_name='DocumenetDBSG',
+            vpc=self._vpc,
+            description='DocumentDB security group',
         )

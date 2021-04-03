@@ -26,5 +26,6 @@ class NetworkStack(core.Stack):
 
         sg = SecurityGroup(self, "SecurityGroups", self.vpc)
         self.bastion_sg_id = sg.bastion_sg.security_group_id
+        self.docdb_sg_id = sg.docdb_sg.security_group_id
 
         BastionHost(self, "BastionHost", vpc=self.vpc, bastion_sg_id=self.bastion_sg_id)

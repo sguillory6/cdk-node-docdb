@@ -36,7 +36,7 @@ class BastionHost(core.Construct):
                                 machine_image=amzn_linux,
                                 vpc=vpc,
                                 role=role,
-                                vpc_subnets=ec2.SubnetSelection(subnet_name="Public"),
+                                vpc_subnets=ec2.SubnetSelection(subnet_group_name="Public"),
                                 security_group=bastion_sg
                                 )
 

@@ -14,18 +14,17 @@ class DataStack(core.Stack):
     def __init__(self, scope: core.Construct, id: str,
                  config: Dict,
                  vpc: ec2.Vpc,
-                 # es_sg_id: str,
+                 docdb_sg_id: str,
                  ** kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # Apply common tags to stack resources.
         add_tags_to_stack(self, config)
 
-        # Get elasticsearch security group created in tne network stack
-        # es_sg = ec2.SecurityGroup.from_security_group_id(
-        #     self,
-        #     "ElasticsearchSG",
-        #     security_group_id=es_sg_id
-        # )
-        # DocumentDB(self, 'Vpc', config, vpc, es_sg)
-        DocumentDB(self, 'Vpc', config, vpc)
+        # Get docdb security group created in tne network stack
+        docdb_sg = ec2.SecurityGroup.from_security_group_id(
+            self,
+            "DocumentDBSG",
+            security_group_id=docdb_sg_id
+        )
+        DocumentDB(self, 'Vpc', config, vpc, docdb_sg)

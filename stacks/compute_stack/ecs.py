@@ -46,6 +46,6 @@ class Ecs(core.Construct):
             key_name=ecs_config['keyName'],
             min_capacity=2,
             max_capacity=10,
-            vpc_subnets=ec2.SubnetSelection(subnet_name=ecs_config['subnetGroupName'])
+            vpc_subnets=ec2.SubnetSelection(subnet_group_name=ecs_config['subnetGroupName'])
         )
 

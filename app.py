@@ -45,7 +45,7 @@ DataStack(app,
           "DataStack",
           config=config,
           vpc=network_stack.vpc,
-          # es_sg_id=network_stack.es_sg_id,
+          docdb_sg_id=network_stack.docdb_sg_id,
           env=env
           )
 

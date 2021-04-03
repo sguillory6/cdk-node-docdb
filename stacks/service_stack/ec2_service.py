@@ -36,7 +36,8 @@ class Ec2Service(core.Construct):
             environment={
                 "KEY1": "Value1",
                 "KEY2": "value2"
-            }
+            },
+            logging=ecs.LogDrivers.aws_logs(stream_prefix="NodeAPI-DocDB")
         )
         port_mapping = ecs.PortMapping(
             container_port=3080,
@@ -67,7 +68,7 @@ class Ec2Service(core.Construct):
             desired_count=4,
             min_healthy_percent=100,
             max_healthy_percent=200,
-            vpc_subnets=ec2.SubnetSelection(subnet_name=ecs_config['subnetGroupName']),
+            vpc_subnets=ec2.SubnetSelection(subnet_group_name=ecs_config['subnetGroupName']),
             security_group=service_sg
         )
 
@@ -76,7 +77,7 @@ class Ec2Service(core.Construct):
             self, "LB",
             vpc=vpc,
             internet_facing=True,
-            vpc_subnets=ec2.SubnetSelection(subnet_name=ecs_config['publicSubnetGroupName'])
+            vpc_subnets=ec2.SubnetSelection(subnet_group_name=ecs_config['publicSubnetGroupName'])
         )
         listener = lb.add_listener(
             "PublicListener",
