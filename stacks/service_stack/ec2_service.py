@@ -20,7 +20,7 @@ class Ec2Service(core.Construct):
         super().__init__(scope, id)
         ecs_config = config['compute']['ecs']
         mongodb_config = config['mongodb']
-        app_config =  config['app']
+        app_config = config['app']
 
         # Create Task Definition
         task_definition = ecs.Ec2TaskDefinition(
@@ -44,7 +44,13 @@ class Ec2Service(core.Construct):
                 "MONGODB_USERNAME": mongodb_config['username'],
                 "MONGODB_PASSWORD": mongodb_config['password']
             },
-            logging=ecs.LogDrivers.aws_logs(stream_prefix="NodeAPI-DocDB")
+            logging=ecs.LogDrivers.firelens(options={
+                "Name": "cloudwatch",
+                "region": config['awsRegion'],
+                "log_group_name": "fluentbit-node_docdb",
+                "auto_create_group": "true",
+                "log_stream_name": "web"
+            })
         )
         port_mapping = ecs.PortMapping(
             container_port=3080,
