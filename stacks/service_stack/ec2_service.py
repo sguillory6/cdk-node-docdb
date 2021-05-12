@@ -19,6 +19,8 @@ class Ec2Service(core.Construct):
                  ) -> None:
         super().__init__(scope, id)
         ecs_config = config['compute']['ecs']
+        mongodb_config = config['mongodb']
+        app_config =  config['app']
 
         # Create Task Definition
         task_definition = ecs.Ec2TaskDefinition(
@@ -30,12 +32,17 @@ class Ec2Service(core.Construct):
         )
         container = task_definition.add_container(
             "web",
-            image=ecs.ContainerImage.from_registry("sguillory6/react-node-backend:1.0"),
+            image=ecs.ContainerImage.from_registry("sguillory6/react-node-backend:2.1"),
             cpu=256,
             memory_limit_mib=256,
             environment={
-                "KEY1": "Value1",
-                "KEY2": "value2"
+                "NODE_ENV": app_config['node_env'],
+                "APP_PORT": app_config['port'],
+                "MONGODB_HOST": mongodb_config['host'],
+                "MONGODB_PORT": mongodb_config['port'],
+                "MONGODB_DATABASE": mongodb_config['database'],
+                "MONGODB_USERNAME": mongodb_config['username'],
+                "MONGODB_PASSWORD": mongodb_config['password']
             },
             logging=ecs.LogDrivers.aws_logs(stream_prefix="NodeAPI-DocDB")
         )
@@ -65,7 +72,7 @@ class Ec2Service(core.Construct):
             cluster=cluster,
             task_definition=task_definition,
             daemon=False,
-            desired_count=4,
+            desired_count=3,
             min_healthy_percent=100,
             max_healthy_percent=200,
             vpc_subnets=ec2.SubnetSelection(subnet_group_name=ecs_config['subnetGroupName']),

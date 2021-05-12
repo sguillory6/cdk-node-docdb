@@ -5,3 +5,13 @@ awsRegion: us-west-2
 network:
   vpc:
     cidr: 10.0.0.0/18
+app:
+  node_env: development
+  port: "3080"
+
+mongodb:
+  host: vpcdatabase8b94e9bd-svuov9qfxfki.cluster-cbf3wjkxkadm.us-west-2.docdb.amazonaws.com
+  port: "27017"
+  database: mongo-dev
+  username: stan_db
+  password: stan_db_pw
